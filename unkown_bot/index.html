@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>슬라이딩 봇 퍼즐</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>슬라이딩 봇 퍼즐</h1>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="ko" aria-label="한국어">🇰🇷</button>
+      <button class="lang-btn" data-lang="en" aria-label="English">🇺🇸</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel">
+      <div id="guess-grid" class="grid"></div>
+      <div class="actions">
+        <button id="submit-btn" class="primary">Submit</button>
+        <button id="tutorial-btn" class="ghost">?</button>
+      </div>
+      <p id="status" class="status"></p>
+    </section>
+
+    <section class="panel">
+      <div id="attempts" class="attempts"></div>
+      <div class="start-picker">
+        <div class="keyboard keyboard-grid">
+          <div id="start-grid" class="start-grid"></div>
+          <button class="key" data-key="U" style="grid-row: 5; grid-column: 1;">⬆️</button>
+          <button class="key" data-key="R" style="grid-row: 5; grid-column: 2;">➡️</button>
+          <button class="key" data-key="D" style="grid-row: 5; grid-column: 3;">⬇️</button>
+          <button class="key" data-key="L" style="grid-row: 5; grid-column: 4;">⬅️</button>
+          <button class="key span2" data-action="back" style="grid-row: 1 / span 2; grid-column: 5;">⌫</button>
+          <button class="key span3 primary" data-action="enter" style="grid-row: 3 / span 3; grid-column: 5;">Enter</button>
+        </div>
+      </div>
+      <p id="question-result" class="status"></p>
+    </section>
+  </main>
+
+  <div id="tutorial-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>게임 튜토리얼</h3>
+        <button id="close-tutorial" class="ghost small">닫기</button>
+      </div>
+      <div class="tutorial-body">
+        <p>목표: 4x4 격자에서 정확히 6칸을 맞추세요.</p>
+        <ul>
+          <li>격자 탭/클릭: 빈칸 → 채움 → ? 메모 → 빈칸 순서로 회전합니다. ?는 정답 체크에 포함되지 않습니다.</li>
+          <li>질문: 행/열과 방향1~3을 입력 후 제출하세요. 7번까지 시도할 수 있습니다.</li>
+          <li>이동 규칙: 좌우/상하는 이어져 있고, 진행 방향으로 빈칸을 따라가다 처음 만나는 채워진 칸 바로 앞에서 멈춥니다. 시작 칸이 채워져 있으면 전체가 반전된 상태로 계산합니다.</li>
+          <li>해당 행/열이 전부 비어 있으면 결과는 🌀로 표시되어 무한 이동을 막습니다.</li>
+          <li>Submit: 정확히 6칸을 채운 뒤 확인합니다.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
