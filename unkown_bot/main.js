@@ -599,6 +599,11 @@ function advanceAttempt() {
 function updateControls() {
   const exhausted = questionsExhausted();
   const allDisabled = gameOver;
+  const attempt = attempts[currentAttempt];
+  const activeSlot = attempt && !attempt.locked ? nextEmptyIndex(attempt.slots) : -1;
+  const disallowAllDirs =
+    exhausted || allDisabled || !attempt || attempt.locked || attempt.startIdx === null || activeSlot <= 0;
+
   // disable start grid buttons
   startGridEl.querySelectorAll('button').forEach((btn) => {
     btn.disabled = exhausted || allDisabled;
@@ -606,6 +611,20 @@ function updateControls() {
   // disable direction/back/enter keys
   keyboardButtons.forEach((btn) => {
     btn.disabled = exhausted || allDisabled;
+
+    const key = btn.dataset.key;
+    if (key && directions.includes(key)) {
+      let disabled = disallowAllDirs;
+      if (!disabled && activeSlot === 2) {
+        const prev = attempt.slots[1];
+        disabled = key === prev || isReverse(key, prev);
+      }
+      if (!disabled && activeSlot === 3) {
+        const prev = attempt.slots[2];
+        disabled = key === prev || isReverse(key, prev);
+      }
+      btn.disabled = disabled;
+    }
   });
   // disable guess grid when game over
   gridEl.querySelectorAll('.cell').forEach((btn) => {
